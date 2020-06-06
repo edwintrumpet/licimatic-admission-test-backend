@@ -1,0 +1,39 @@
+{
+  "name": "govmatic-api",
+  "version": "1.0.0",
+  "description": "GovMatic API Rest, through which the information of the Grants platform is collected and delivered in an orderly manner to GovMatic-App.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "DEBUG=app* nodemon src/index.js",
+    "start": "NODE_ENV=production node src/index.js",
+    "test": "jest",
+    "test:cover": "jest --coverage",
+    "lint": "eslint ./src/",
+    "lint:fix": "eslint ./src/ --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edwintrumpet/licimatic-admission-test-backend.git"
+  },
+  "keywords": [],
+  "author": "Edwin García <spark.com.co@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/edwintrumpet/licimatic-admission-test-backend/issues"
+  },
+  "homepage": "https://github.com/edwintrumpet/licimatic-admission-test-backend#readme",
+  "dependencies": {
+    "dotenv": "8.2.0",
+    "express": "4.17.1"
+  },
+  "devDependencies": {
+    "debug": "4.1.1",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb-base": "14.1.0",
+    "eslint-plugin-import": "2.20.2",
+    "eslint-plugin-jest": "23.13.2",
+    "husky": "4.2.5",
+    "jest": "26.0.1",
+    "nodemon": "2.0.4",
+    "supertest": "4.0.2"
+  }
+}
