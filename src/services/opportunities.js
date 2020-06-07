@@ -16,9 +16,36 @@ class OpportunitiesService {
     await page.waitFor(1000);
     const opportunities = await page.evaluate(() => {
       const items = [];
-      // eslint-disable-next-line no-undef
-      const buildOpportunity = (row, selector) => document
-        .getElementsByClassName(selector)[row].children[1].innerText;
+      const buildOpportunity = (row, selector) => {
+        const opportunity = {};
+        for (let i = 0; i < 6; i += 1) {
+          // eslint-disable-next-line no-undef
+          const text = document.getElementsByClassName(selector)[row].children[i].innerText;
+          switch (i) {
+            case 0:
+              opportunity.number = text;
+              break;
+            case 1:
+              opportunity.title = text;
+              break;
+            case 2:
+              opportunity.agency = text;
+              break;
+            case 3:
+              opportunity.status = text;
+              break;
+            case 4:
+              opportunity.postedDate = text;
+              break;
+            case 5:
+              opportunity.closeDate = text;
+              break;
+            default:
+              // never
+          }
+        }
+        return opportunity;
+      };
       for (let i = 0; i <= 12; i += 1) {
         items.push(buildOpportunity(i, 'gridevenrow'));
         if (i !== 12) {
