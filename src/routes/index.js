@@ -1,6 +1,8 @@
 const express = require('express');
 const OpportunitiesService = require('../services/opportunities');
 
+const opportunitiesService = new OpportunitiesService();
+
 const routes = (app) => {
   const router = express.Router();
   app.use('/', router);
@@ -13,7 +15,7 @@ const routes = (app) => {
   });
   router.get('/scraping', async (req, res, next) => {
     try {
-      OpportunitiesService.syncOpportunities();
+      opportunitiesService.syncOpportunities();
       res.status(200).json({ message: 'Scraping...', statusCode: res.statusCode });
     } catch (err) {
       next(err);

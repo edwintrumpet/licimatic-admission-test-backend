@@ -1,7 +1,13 @@
 const puppeteer = require('puppeteer');
+const MongoLib = require('../lib/mongo');
 
 class OpportunitiesService {
-  static async syncOpportunities() {
+  constructor() {
+    this.collection = 'opportunities';
+    this.mongoDB = new MongoLib();
+  }
+
+  async syncOpportunities() {
     const opportunities = [];
     const grants = 'https://www.grants.gov/custom/search.jsp';
     const args = [
@@ -66,6 +72,7 @@ class OpportunitiesService {
       await page.click(`a[href="javascript:pageSearchResults( '${currentPage}' )"]`);
     } while (currentPage <= 40);
     await browser.close();
+    this.mongoDB.save(this.collection, opportunities);
   }
 }
 
