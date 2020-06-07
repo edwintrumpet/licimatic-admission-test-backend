@@ -13,7 +13,7 @@ class OpportunitiesService {
     const browser = await puppeteer.launch(options);
     const page = await browser.newPage();
     await page.goto(grants);
-    // await page.waitFor(1000);
+    await page.waitFor(1000);
     const opportunities = await page.evaluate(() => {
       const items = [];
       // eslint-disable-next-line no-undef
