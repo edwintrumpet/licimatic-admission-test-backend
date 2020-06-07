@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 
 class OpportunitiesService {
   static async syncOpportunities() {
+    const opportunities = [];
     const grants = 'https://www.grants.gov/custom/search.jsp';
     const args = [
       '--no-sandbox',
@@ -13,8 +14,7 @@ class OpportunitiesService {
     const browser = await puppeteer.launch(options);
     const page = await browser.newPage();
     await page.goto(grants);
-    await page.waitFor(1000);
-    const opportunities = await page.evaluate(() => {
+    const readPage = async (view) => view.evaluate(() => {
       const items = [];
       const buildOpportunity = (row, selector) => {
         const opportunity = {};
@@ -54,7 +54,19 @@ class OpportunitiesService {
       }
       return items;
     });
+    let currentPage = 1;
+    do {
+      // eslint-disable-next-line no-await-in-loop
+      await page.waitFor(2000);
+      // eslint-disable-next-line no-await-in-loop
+      const currentOpportunities = await readPage(page);
+      opportunities.push(...currentOpportunities);
+      currentPage += 1;
+      // eslint-disable-next-line no-await-in-loop
+      await page.click(`a[href="javascript:pageSearchResults( '${currentPage}' )"]`);
+    } while (currentPage <= 40);
     await browser.close();
+    console.log(opportunities.length);
     return opportunities;
   }
 }
