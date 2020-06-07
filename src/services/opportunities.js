@@ -57,7 +57,7 @@ class OpportunitiesService {
     let currentPage = 1;
     do {
       // eslint-disable-next-line no-await-in-loop
-      await page.waitFor(2000);
+      await page.waitFor(1000);
       // eslint-disable-next-line no-await-in-loop
       const currentOpportunities = await readPage(page);
       opportunities.push(...currentOpportunities);
