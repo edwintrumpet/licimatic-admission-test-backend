@@ -66,8 +66,6 @@ class OpportunitiesService {
       await page.click(`a[href="javascript:pageSearchResults( '${currentPage}' )"]`);
     } while (currentPage <= 40);
     await browser.close();
-    console.log(opportunities);
-    console.log(opportunities.length);
   }
 }
 
