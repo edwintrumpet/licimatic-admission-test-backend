@@ -16,7 +16,7 @@ class OpportunitiesService {
     const page = await browser.newPage();
     await page.goto(platzi);
     // eslint-disable-next-line no-undef
-    const text = await page.evaluate(() => document.getElementsByClassName('HeroContent-title')[0].innerText);
+    const text = await page.evaluate(() => document.getElementsByClassName('HomeSearch-title')[0].innerText);
     await browser.close();
     return text;
   }
