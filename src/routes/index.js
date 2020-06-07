@@ -13,8 +13,8 @@ const routes = (app) => {
   });
   router.get('/scraping', async (req, res, next) => {
     try {
-      const opportunities = await OpportunitiesService.syncOpportunities();
-      res.status(200).json({ data: opportunities, message: 'Scraping works!', statusCode: res.statusCode });
+      OpportunitiesService.syncOpportunities();
+      res.status(200).json({ message: 'Scraping...', statusCode: res.statusCode });
     } catch (err) {
       next(err);
     }

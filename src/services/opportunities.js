@@ -57,7 +57,7 @@ class OpportunitiesService {
     let currentPage = 1;
     do {
       // eslint-disable-next-line no-await-in-loop
-      await page.waitFor(1000);
+      await page.waitFor(2000);
       // eslint-disable-next-line no-await-in-loop
       const currentOpportunities = await readPage(page);
       opportunities.push(...currentOpportunities);
@@ -66,7 +66,8 @@ class OpportunitiesService {
       await page.click(`a[href="javascript:pageSearchResults( '${currentPage}' )"]`);
     } while (currentPage <= 40);
     await browser.close();
-    return opportunities;
+    console.log(opportunities);
+    console.log(opportunities.length);
   }
 }
 
