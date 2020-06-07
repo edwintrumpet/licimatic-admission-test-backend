@@ -16,7 +16,7 @@ const routes = (app) => {
       const opportunities = await OpportunitiesService.syncOpportunities();
       res.status(200).json({ data: opportunities, message: 'Scraping works!', statusCode: res.statusCode });
     } catch (err) {
-      next();
+      next(err);
     }
   });
 };
