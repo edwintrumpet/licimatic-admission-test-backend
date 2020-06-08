@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const debug = require('debug')('app:server');
 const { port } = require('./config/index');
 const routes = require('./routes');
@@ -9,6 +10,9 @@ const notFoundHandler = require('./utils/middlewares/notFoundHandler');
 const app = express();
 
 // Middlewares
+app.use(cors({
+  origin: true,
+}));
 app.use(express.json());
 
 // Routes
