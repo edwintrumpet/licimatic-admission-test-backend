@@ -7,7 +7,7 @@ class OpportunitiesService {
     this.mongoDB = new MongoLib();
   }
 
-  async syncOpportunities() {
+  async syncOpportunities(app) {
     const opportunities = [];
     const grants = 'https://www.grants.gov/custom/search.jsp';
     const args = [
@@ -72,7 +72,8 @@ class OpportunitiesService {
       await page.click(`a[href="javascript:pageSearchResults( '${currentPage}' )"]`);
     } while (currentPage <= 40);
     await browser.close();
-    this.mongoDB.save(this.collection, opportunities);
+    const response = await this.mongoDB.save(this.collection, opportunities);
+    app.locals.io.emit('scraped', response);
   }
 }
 

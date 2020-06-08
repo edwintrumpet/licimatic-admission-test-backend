@@ -1,4 +1,6 @@
 const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
 const cors = require('cors');
 const debug = require('debug')('app:server');
 const { port } = require('./config/index');
@@ -8,6 +10,9 @@ const notFoundHandler = require('./utils/middlewares/notFoundHandler');
 
 // Initializations
 const app = express();
+const server = http.createServer(app);
+const io = socketIo.listen(server);
+app.locals.io = io;
 
 // Middlewares
 app.use(cors({
@@ -27,7 +32,9 @@ app.use(wrapErrors);
 app.use(errorHandler);
 
 // Server
-app.listen(port, (err) => {
+server.listen(port, (err) => {
   if (err) debug(err);
   else debug(`Listening on http://localhost:${port}`);
 });
+
+// io.on('connect', (socket) => {});

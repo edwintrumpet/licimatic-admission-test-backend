@@ -15,7 +15,7 @@ const routes = (app) => {
   });
   router.get('/scraping', async (req, res, next) => {
     try {
-      opportunitiesService.syncOpportunities();
+      opportunitiesService.syncOpportunities(app);
       res.status(200).json({ message: 'Scraping...', statusCode: res.statusCode });
     } catch (err) {
       next(err);
