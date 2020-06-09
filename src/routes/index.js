@@ -6,9 +6,10 @@ const opportunitiesService = new OpportunitiesService();
 const routes = (app) => {
   const router = express.Router();
   app.use('/', router);
-  router.get('/', async (req, res, next) => {
+  router.get('/opportunities', async (req, res, next) => {
     try {
-      res.status(200).json({ message: 'Routes works!', statusCode: res.statusCode });
+      const opportunities = await opportunitiesService.getOpportunities({});
+      res.status(200).json({ data: opportunities, message: 'Opportunities listed!', statusCode: res.statusCode });
     } catch (err) {
       next(err);
     }
