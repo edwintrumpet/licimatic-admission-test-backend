@@ -7,7 +7,15 @@ class OpportunitiesService {
     this.mongoDB = new MongoLib();
   }
 
-  async syncOpportunities() {
+  async getOpportunities({ pivot }) {
+    const options = {};
+    const query = {};
+    options.limit = 1000;
+    if (pivot) query.pivot = pivot;
+    return this.mongoDB.get(this.collection, query, options);
+  }
+
+  async syncOpportunities(app) {
     const opportunities = [];
     const grants = 'https://www.grants.gov/custom/search.jsp';
     const args = [
@@ -72,7 +80,9 @@ class OpportunitiesService {
       await page.click(`a[href="javascript:pageSearchResults( '${currentPage}' )"]`);
     } while (currentPage <= 40);
     await browser.close();
-    this.mongoDB.save(this.collection, opportunities);
+    opportunities[0].pivot = true;
+    const response = await this.mongoDB.save(this.collection, opportunities);
+    app.locals.io.emit('scraped', response);
   }
 }
 

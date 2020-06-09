@@ -1,6 +1,5 @@
 const { MongoClient } = require('mongodb');
 const debug = require('debug')('app:db');
-const Boom = require('@hapi/boom');
 const {
   dbUser,
   dbPassword,
@@ -42,13 +41,14 @@ class MongoLib {
     return MongoLib.connection;
   }
 
+  async get(collection, query, options) {
+    const db = await this.connect();
+    return db.collection(collection).find(query, options).toArray();
+  }
+
   async save(collection, data) {
-    try {
-      const db = await this.connect();
-      return db.collection(collection).insertMany(data);
-    } catch (err) {
-      throw Boom.internal(err);
-    }
+    const db = await this.connect();
+    return db.collection(collection).insertMany(data);
   }
 }
 
